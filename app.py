@@ -1,13 +1,11 @@
 from flask import Flask, jsonify
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
-from resources.student import StudentRegister, StudentLogin, EditStudentdetails, Outpassstatus, GetStudentHistory
-from resources.admin import AdminRegister, AdminLogin, EditAdmindetails, GetPendingNoOfPasses, GetPassesHistory, Studentdetails, SetOutpassesleft
-from resources.outpass import OutpassApplication, PendingOutpasses, SetOutpassStatus, Outpasssdetails
+from resources.tracker import details
 
 app = Flask(__name__)
 app.config['PROPAGATE_EXCEPTIONS']=True
-app.config['JWT_SECRET_KEY']='coscskillup'
+app.config['JWT_SECRET_KEY']='tracker123'
 api = Api(app)
 jwt = JWTManager(app)
 
@@ -25,22 +23,8 @@ def invalid_token_callback(error):
         "description":"Signature verification failed"
     }), 401
 
-api.add_resource(StudentRegister, '/studentregister')
-api.add_resource(AdminRegister, '/adminregister')
-api.add_resource(StudentLogin, '/studentlogin')
-api.add_resource(AdminLogin, '/adminlogin')
-api.add_resource(OutpassApplication, '/outpassapplication')
-api.add_resource(PendingOutpasses, '/outpassrequests')
-api.add_resource(EditStudentdetails, '/editstudentdetails')
-api.add_resource(EditAdmindetails, '/editadmindetails')
-api.add_resource(GetPendingNoOfPasses, '/getpendingnoofpassesleft')
-api.add_resource(GetPassesHistory, '/getpasseshistory')
-api.add_resource(SetOutpassStatus, '/setoutpassstatus')
-api.add_resource(Studentdetails, '/studentdetails')
-api.add_resource(Outpassstatus, '/outpassstatus')
-api.add_resource(Outpasssdetails, '/outpassdetails')
-api.add_resource(GetStudentHistory, '/getstudenthistory')
-api.add_resource(SetOutpassesleft, '/setoutpassesleft')
+api.add_resource(details, '/details')
+
 
 if __name__ == '__main__':
     app.run()
